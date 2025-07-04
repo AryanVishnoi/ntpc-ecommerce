@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NTPC-Shop</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+            crossorigin="anonymous">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+            crossorigin="anonymous"></script>
+        <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ntpc-primary': '#0056b3',
+                        'ntpc-light': '#007bff',
+                        'ntpc-dark': '#003d7a',
+                    }
+                }
+            }
+        }
+    </script>
+        <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f9f7;
+            color: #333;
+        }
+        
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(90deg, #d4af37 0%, #f1e5ac 50%, #d4af37 100%);
+        }
+        
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/ntpc_image.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .carousel-item {
+            transition: transform 0.6s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+         :root {
+            --ntpc-blue: #0056b3;
+            --ntpc-light-blue: #007bff;
+            --ntpc-dark-blue: #003d7a;
+            --ntpc-grey: #6c757d;
+            --ntpc-light-grey: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-logo {
+            height: 40px;
+            transition: transform 0.3s;
+        }
+        
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            color: var(--ntpc-grey);
+            font-weight: 500;
+            position: relative;
+            padding: 20px 15px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--ntpc-blue);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 3px;
+            background-color: var(--ntpc-blue);
+        }
+        
+        .search-input {
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 8px 15px;
+            padding-right: 40px;
+            width: 200px;
+            transition: width 0.3s, box-shadow 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--ntpc-blue);
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+            width: 250px;
+        }
+        
+        .search-btn {
+            right: 10px;
+            color: var(--ntpc-grey);
+            transition: color 0.3s;
+        }
+        
+        .search-btn:hover {
+            color: var(--ntpc-blue);
+        }
+        
+        .btn-login {
+            border: 1px solid var(--ntpc-blue);
+            color: var(--ntpc-blue);
+            transition: all 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: var(--ntpc-light-grey);
+        }
+        
+        .btn-signup {
+            background-color: var(--ntpc-blue);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .btn-signup:hover {
+            background-color: var(--ntpc-dark-blue);
+        }
+        
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: var(--ntpc-blue);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background-color: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        @media (max-width: 992px) {
+            .nav-links,
+            .user-actions {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+            .search-container {
+                margin-left: auto;
+                margin-right: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-input {
+                width: 150px;
+            }
+            .search-input:focus {
+                width: 180px;
+            }
+        }
+        
+        .carousel-item {
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .carousel-item.hidden {
+            opacity: 0;
+            display: none;
+        }
+        
+        .carousel-item.active {
+            opacity: 1;
+            display: block;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 86, 179, 0.1);
+        }
+    </style>
+    </head>
+
+    <body class="antialiased">
+
+        <div class="bg-white py-2 px-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Left Image -->
+                <div class="w-1/3 flex justify-start">
+                    <img src="/logo/ntpc.jpg" alt="NTPC"
+                        class="w-50 h-26 object-contain" />
+                </div>
+
+                <!-- Center Image -->
+                <div class="w-1/3 flex justify-center">
+                    <img src="/logo/ntpc50.png" alt="NTPC 50"
+                        class="w-26 h-26 object-contain" />
+                </div>
+
+                <!-- Right Image -->
+                <div class="w-1/3 flex justify-end">
+                    <img src="/logo/Auraiya_Logo-removebg-preview (4).png"
+                        alt="NTPC Auraiya" class="w-50 h-25 object-contain" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Navbar -->
+
+        <nav class="navbar">
+            <div class="nav-container flex items-center justify-between h-16">
+                <!-- Logo and Navigation Links -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center"
+                        aria-label="NTPC Home">
+                        <img src="/logo/ntpc.jpg" alt="NTPC Logo"
+                            class="nav-logo">
+                    </a>
+
+                    <div class="nav-links hidden md:flex ml-10">
+                        <a href="/" class="nav-link active"
+                            aria-current="page">Home</a>
+                        <a href="/shop" class="nav-link">Shop</a>
+                        <a href="/about" class="nav-link">About</a>
+                        <a href="/contact" class="nav-link">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container relative flex items-center">
+                    <input type="text" placeholder="Search products..."
+                        class="search-input" aria-label="Search products">
+                    <button class="search-btn absolute" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <!-- User Actions -->
+                <div class="user-actions hidden md:flex items-center space-x-4">
+                    <a href="/cart"
+                        class="cart-icon text-gray-700 hover:text-blue-600 transition"
+                        aria-label="Shopping Cart">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="/login"
+                        class="btn-login px-4 py-2 rounded-md text-sm font-medium">Login</a>
+                    <a href="/signup"
+                        class="btn-signup px-4 py-2 rounded-md text-sm font-medium">Sign
+                        Up</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="hamburger md:hidden text-gray-700"
+                    aria-label="Menu" aria-expanded="false">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu md:hidden">
+                <div class="px-4 py-2">
+                    <a href="/"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Home</a>
+                    <a href="/shop"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Shop</a>
+                    <a href="/about"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">About</a>
+                    <a href="/contact"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Contact</a>
+                    <div class="flex space-x-2 mt-2">
+                        <a href="/login"
+                            class="btn-login flex-1 text-center py-2 rounded-md text-sm font-medium">Login</a>
+                        <a href="/signup"
+                            class="btn-signup flex-1 text-center py-2 rounded-md text-sm font-medium">Sign
+                            Up</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <section class="relative bg-ntpc-blue overflow-hidden">
+            <div class="carousel-container h-64 md:h-96 relative">
+                <!-- Carousel Items -->
+                <div
+                    class="carousel-item active absolute inset-0 transition-opacity duration-1000 ease-in-out">
+                    <div
+                        class="h-full w-full bg-cover bg-center flex flex-col items-center justify-center text-white px-4 text-center"
+                        style="background-image: url('/images/i1.jpg')">
+                        <h2 class="text-2xl md:text-4xl font-bold mb-4">Premium
+                            Wellness Products</h2>
+                        <p class="mb-6 text-lg">Direct from NTPC to your home
+                        </p>
+                        <button
+                            class="bg-white text-blue-800 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition">Shop
+                            Now</button>
+                    </div>
+                </div>
+                <div
+                    class="carousel-item hidden absolute inset-0 transition-opacity duration-1000 ease-in-out">
+                    <div
+                        class="h-full w-full bg-cover bg-center flex flex-col items-center justify-center text-white px-4 text-center"
+                        style="background-image: url('/images/i2.jpg')">
+                        <h2 class="text-2xl md:text-4xl font-bold mb-4">100%
+                            Pure Mustard Oil</h2>
+                        <p class="mb-6 text-lg">Cold-pressed for maximum
+                            nutrition
+                        </p>
+                        <button
+                            class="bg-white text-blue-800 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition">Explore</button>
+                    </div>
+                </div>
+                <!-- Additional Carousel Items -->
+                <div
+                    class="carousel-item hidden absolute inset-0 transition-opacity duration-1000 ease-in-out">
+                    <div
+                        class="h-full w-full bg-cover bg-center flex flex-col items-center justify-center text-white px-4 text-center"
+                        style="background-image: url('/images/i3.jpg')">
+                        <h2 class="text-2xl md:text-4xl font-bold mb-4">Organic
+                            Amla Products</h2>
+                        <p class="mb-6 text-lg">Rich in Vitamin C for immunity
+                        </p>
+                        <button
+                            class="bg-white text-blue-800 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition">Discover</button>
+                    </div>
+                </div>
+                <div
+                    class="carousel-item hidden absolute inset-0 transition-opacity duration-1000 ease-in-out">
+                    <div
+                        class="h-full w-full bg-cover bg-center flex flex-col items-center justify-center text-white px-4 text-center"
+                        style="background-image: url('/images/i4.jpg')">
+                        <h2 class="text-2xl md:text-4xl font-bold mb-4">Support
+                            Local Communities</h2>
+                        <p class="mb-6 text-lg">Every purchase makes a
+                            difference
+                        </p>
+                        <button
+                            class="bg-white text-blue-800 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition">Learn
+                            More</button>
+                    </div>
+                </div>
+                <div
+                    class="carousel-item hidden absolute inset-0 transition-opacity duration-1000 ease-in-out">
+                    <div
+                        class="h-full w-full bg-cover bg-center flex flex-col items-center justify-center text-white px-4 text-center"
+                        style="background-image: url('/images/i5.jpg')">
+                        <h2
+                            class="text-2xl md:text-4xl font-bold mb-4">Government
+                            Quality Assurance</h2>
+                        <p class="mb-6 text-lg">Trusted by millions of Indians
+                        </p>
+                        <button
+                            class="bg-white text-blue-800 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition">Our
+                            Promise</button>
+                    </div>
+                </div>
+                <div
+                    class="carousel-item hidden absolute inset-0 transition-opacity duration-1000 ease-in-out">
+                    <div
+                        class="h-full w-full bg-cover bg-center flex flex-col items-center justify-center text-white px-4 text-center"
+                        style="background-image: url('/images/i6.jpg')">
+                        <h2
+                            class="text-2xl md:text-4xl font-bold mb-4">Nationwide
+                            Delivery
+                        </h2>
+                        <p class="mb-6 text-lg">Fast and reliable shipping</p>
+                        <button
+                            class="bg-white text-blue-800 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition">Order
+                            Now</button>
+                    </div>
+                </div>
+
+                <!-- Carousel Controls -->
+                <button id="prevBtn"
+                    class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 text-blue-800 p-2 rounded-full hover:bg-opacity-100 transition">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="nextBtn"
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 text-blue-800 p-2 rounded-full hover:bg-opacity-100 transition">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Carousel Indicators -->
+                <div
+                    class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <button
+                        class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition"
+                        data-index="0"></button>
+                    <button
+                        class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition"
+                        data-index="1"></button>
+                    <button
+                        class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition"
+                        data-index="2"></button>
+                    <button
+                        class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition"
+                        data-index="3"></button>
+                    <button
+                        class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition"
+                        data-index="4"></button>
+                    <button
+                        class="carousel-indicator w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition"
+                        data-index="5"></button>
+                </div>
+            </div>
+        </section>
+
+        <style>
+         :root {
+            --ntpc-blue: #0056b3;
+        }
+    </style>
+        <!-- Intro Section -->
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <h2
+                            class="text-3xl font-bold text-ntpc-dark mb-6">Welcome
+                            to NTPC eCommerce</h2>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            As a trusted government brand, we bring you premium
+                            wellness products directly from our farms to your
+                            home. Our mission is to promote health and wellbeing
+                            while supporting local communities across India.
+                        </p>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            From 100% pure Mustard Oil to nutrient-rich Amla
+                            products, each item in our collection is carefully
+                            selected and quality-assured to meet the highest
+                            standards.
+                        </p>
+                        <button onclick="location.href='/shop'"
+                            class="bg-ntpc-primary text-white px-6 py-3 rounded-full font-medium hover:bg-ntpc-dark transition">
+                            Explore Our Shop <i
+                                class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div
+                                class="bg-ntpc-light bg-opacity-10 p-6 rounded-lg border border-ntpc-light border-opacity-20">
+                                <div class="text-ntpc-primary text-4xl mb-4">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <h3
+                                    class="font-bold text-ntpc-dark mb-2">Organic
+                                    Farming
+                                </h3>
+                                <p class="text-gray-600 text-sm">Sustainably
+                                    grown without harmful chemicals</p>
+                            </div>
+                            <div
+                                class="bg-ntpc-light bg-opacity-10 p-6 rounded-lg border border-ntpc-light border-opacity-20">
+                                <div class="text-ntpc-primary text-4xl mb-4">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <h3
+                                    class="font-bold text-ntpc-dark mb-2">Quality
+                                    Certified
+                                </h3>
+                                <p
+                                    class="text-gray-600 text-sm">Government-approved
+                                    quality standards</p>
+                            </div>
+                            <div
+                                class="bg-ntpc-light bg-opacity-10 p-6 rounded-lg border border-ntpc-light border-opacity-20">
+                                <div class="text-ntpc-primary text-4xl mb-4">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <h3 class="font-bold text-ntpc-dark mb-2">Fast
+                                    Delivery
+                                </h3>
+                                <p class="text-gray-600 text-sm">Across India in
+                                    3-5 business days</p>
+                            </div>
+                            <div
+                                class="bg-ntpc-light bg-opacity-10 p-6 rounded-lg border border-ntpc-light border-opacity-20">
+                                <div class="text-ntpc-primary text-4xl mb-4">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </div>
+                                <h3 class="font-bold text-ntpc-dark mb-2">Fair
+                                    Pricing
+                                </h3>
+                                <p class="text-gray-600 text-sm">Direct from
+                                    farm, no middlemen</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us -->
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-ntpc-dark mb-2">Why
+                        Choose NTPC eCommerce</h2>
+                    <div class="w-24 h-1 bg-ntpc-primary mx-auto"></div>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div
+                        class="bg-ntpc-light bg-opacity-5 p-6 rounded-lg border border-ntpc-light border-opacity-20 hover:border-opacity-40 transition">
+                        <div class="text-ntpc-primary text-4xl mb-4">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3
+                            class="font-bold text-ntpc-dark mb-2 text-lg">Trusted
+                            Government Brand</h3>
+                        <p class="text-gray-600">Backed by NTPC's reputation for
+                            quality and reliability across India.</p>
+                    </div>
+
+                    <div
+                        class="bg-ntpc-light bg-opacity-5 p-6 rounded-lg border border-ntpc-light border-opacity-20 hover:border-opacity-40 transition">
+                        <div class="text-ntpc-primary text-4xl mb-4">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3
+                            class="font-bold text-ntpc-dark mb-2 text-lg">Quality
+                            Assurance
+                        </h3>
+                        <p class="text-gray-600">Rigorous testing and quality
+                            checks for every product we sell.</p>
+                    </div>
+
+                    <div
+                        class="bg-ntpc-light bg-opacity-5 p-6 rounded-lg border border-ntpc-light border-opacity-20 hover:border-opacity-40 transition">
+                        <div class="text-ntpc-primary text-4xl mb-4">
+                            <i class="fas fa-truck-fast"></i>
+                        </div>
+                        <h3
+                            class="font-bold text-ntpc-dark mb-2 text-lg">Nationwide
+                            Delivery
+                        </h3>
+                        <p class="text-gray-600">Fast and reliable shipping to
+                            every corner of India.</p>
+                    </div>
+
+                    <div
+                        class="bg-ntpc-light bg-opacity-5 p-6 rounded-lg border border-ntpc-light border-opacity-20 hover:border-opacity-40 transition">
+                        <div class="text-ntpc-primary text-4xl mb-4">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3
+                            class="font-bold text-ntpc-dark mb-2 text-lg">Community
+                            Support
+                        </h3>
+                        <p class="text-gray-600">Your purchases directly support
+                            local farmers and communities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Reviews -->
+        <section class="py-12 bg-ntpc-light bg-opacity-5">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-ntpc-dark mb-2">What Our
+                        Customers Say</h2>
+                    <div class="w-24 h-1 bg-ntpc-primary mx-auto"></div>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Review 1 -->
+                    <div
+                        class="review-card bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="bg-ntpc-primary text-white rounded-full h-10 w-10 flex items-center justify-center mr-3">
+                                <span class="font-bold">RK</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-ntpc-dark">Rajesh
+                                    Kumar
+                                </h4>
+                                <div class="flex">
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "The mustard oil is of exceptional quality, much better than what I find in local markets. The packaging was secure and delivery was prompt. Will definitely order again!"
+                        </p>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div
+                        class="review-card bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="bg-ntpc-primary text-white rounded-full h-10 w-10 flex items-center justify-center mr-3">
+                                <span class="font-bold">PM</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-ntpc-dark">Priya
+                                    Malhotra
+                                </h4>
+                                <div class="flex">
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star-half-alt text-yellow-400 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "I've been using the amla powder for 3 months now and can see visible improvement in my hair quality. Trustworthy government brand with authentic products."
+                        </p>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div
+                        class="review-card bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="bg-ntpc-primary text-white rounded-full h-10 w-10 flex items-center justify-center mr-3">
+                                <span class="font-bold">AS</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-ntpc-dark">Amit Sharma
+                                </h4>
+                                <div class="flex">
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i
+                                        class="fas fa-star text-yellow-400 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "Excellent service! The honey is pure and unadulterated. Appreciate the government's initiative to provide quality products directly to consumers."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-10">
+                    <button
+                        class="border-2 border-ntpc-primary text-ntpc-primary px-6 py-2 rounded-full font-medium hover:bg-ntpc-primary hover:text-white transition">
+                        Read More Reviews <i
+                            class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="py-12 bg-ntpc-dark text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Stay Updated
+                    with NTPC eCommerce</h2>
+                <p class="max-w-2xl mx-auto mb-8 opacity-90">
+                    Subscribe to our newsletter for exclusive offers, new
+                    product launches, and wellness tips.
+                </p>
+                <div class="max-w-md mx-auto flex">
+                    <input type="email" placeholder="Your email address"
+                        class="flex-grow px-4 py-3 rounded-l focus:outline-none text-gray-800">
+                    <button
+                        class="bg-ntpc-primary px-6 py-3 rounded-r font-medium hover:bg-ntpc-light transition">
+                        Subscribe <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-8 mt-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">NTPC E-commerce
+                        </h3>
+                        <p class="text-gray-400">Official procurement portal for
+                            NTPC employees and authorized customers.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/"
+                                    class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="/shop"
+                                    class="text-gray-400 hover:text-white transition">Shop</a></li>
+                            <li><a href="/about"
+                                    class="text-gray-400 hover:text-white transition">About</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Privacy
+                                    Policy</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Terms
+                                    of Service</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Procurement
+                                    Policy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Connect With Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                    <p>© 2025 NTPC Limited. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carouselItems = document.querySelectorAll('.carousel-item');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let currentIndex = 0;
+            let intervalId;
+
+            function showSlide(index) {
+                carouselItems.forEach((item, i) => {
+                    if (i === index) {
+                        item.classList.remove('hidden');
+                        item.classList.add('active');
+                    } else {
+                        item.classList.add('hidden');
+                        item.classList.remove('active');
+                    }
+                });
+
+                indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('bg-opacity-100', i === index);
+                    indicator.classList.toggle('bg-opacity-50', i !== index);
+                });
+
+                currentIndex = index;
+            }
+
+            function nextSlide() {
+                let newIndex = (currentIndex + 1) % carouselItems.length;
+                showSlide(newIndex);
+            }
+
+            function prevSlide() {
+                let newIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+                showSlide(newIndex);
+            }
+
+            function startAutoPlay() {
+                intervalId = setInterval(nextSlide, 5000);
+            }
+
+            showSlide(0);
+            startAutoPlay();
+
+            nextBtn.addEventListener('click', function() {
+                clearInterval(intervalId);
+                nextSlide();
+                startAutoPlay();
+            });
+
+            prevBtn.addEventListener('click', function() {
+                clearInterval(intervalId);
+                prevSlide();
+                startAutoPlay();
+            });
+
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', function() {
+                    clearInterval(intervalId);
+                    showSlide(index);
+                    startAutoPlay();
+                });
+            });
+
+            const carouselContainer = document.querySelector('.carousel-container');
+            carouselContainer.addEventListener('mouseenter', function() {
+                clearInterval(intervalId);
+            });
+
+            carouselContainer.addEventListener('mouseleave', function() {
+                startAutoPlay();
+            });
+        });
+    </script>
+
+    </body>
+
+</html>

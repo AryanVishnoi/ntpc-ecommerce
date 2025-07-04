@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Login</title>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            width: 100%;
+            background-color: #2563EB;
+            color: white;
+            padding: 10px;
+            border: none;
+            margin-top: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .eye-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .message {
+            text-align: center;
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h2 style="text-align:center;">Login</h2>
+            <form action="/login" method="POST">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="password">Password</label>
+                <div class="relative">
+                    <input type="password" id="password" name="password"
+                        required />
+                    <button type="button" class="eye-button"
+                        onclick="togglePassword('password', this)">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <script>
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            const icon = btn.querySelector("i");
+            input.type = input.type === "password" ? "text" : "password";
+            icon.classList.toggle("fa-eye");
+            icon.classList.toggle("fa-eye-slash");
+        }
+    </script>
+    </body>
+
+</html>

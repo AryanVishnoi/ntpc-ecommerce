@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cart - NTPC eCommerce</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <style>
+         :root {
+            --ntpc-blue: #0056b3;
+            --ntpc-light-blue: #007bff;
+            --ntpc-dark-blue: #003d7a;
+            --ntpc-grey: #6c757d;
+            --ntpc-light-grey: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-logo {
+            height: 40px;
+            transition: transform 0.3s;
+        }
+        
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            color: var(--ntpc-grey);
+            font-weight: 500;
+            position: relative;
+            padding: 20px 15px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--ntpc-blue);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 3px;
+            background-color: var(--ntpc-blue);
+        }
+        
+        .search-input {
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 8px 15px;
+            padding-right: 40px;
+            width: 200px;
+            transition: width 0.3s, box-shadow 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--ntpc-blue);
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+            width: 250px;
+        }
+        
+        .search-btn {
+            right: 10px;
+            color: var(--ntpc-grey);
+            transition: color 0.3s;
+        }
+        
+        .search-btn:hover {
+            color: var(--ntpc-blue);
+        }
+        
+        .btn-login {
+            border: 1px solid var(--ntpc-blue);
+            color: var(--ntpc-blue);
+            transition: all 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: var(--ntpc-light-grey);
+        }
+        
+        .btn-signup {
+            background-color: var(--ntpc-blue);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .btn-signup:hover {
+            background-color: var(--ntpc-dark-blue);
+        }
+        
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: var(--ntpc-blue);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background-color: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        @media (max-width: 992px) {
+            .nav-links,
+            .user-actions {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+            .search-container {
+                margin-left: auto;
+                margin-right: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-input {
+                width: 150px;
+            }
+            .search-input:focus {
+                width: 180px;
+            }
+        }
+    </style>
+    </head>
+
+    <body class="bg-gray-100 font-sans">
+        <nav class="navbar">
+            <div class="nav-container flex items-center justify-between h-16">
+                <!-- Logo and Navigation Links -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center"
+                        aria-label="NTPC Home">
+                        <img src="/logo/ntpc.jpg" alt="NTPC Logo"
+                            class="nav-logo">
+                    </a>
+
+                    <div class="nav-links hidden md:flex ml-10">
+                        <a href="/" class="nav-link"
+                            aria-current="page">Home</a>
+                        <a href="/shop" class="nav-link">Shop</a>
+                        <a href="/about" class="nav-link">About</a>
+                        <a href="/contact" class="nav-link">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container relative flex items-center">
+                    <input type="text" placeholder="Search products..."
+                        class="search-input" aria-label="Search products">
+                    <button class="search-btn absolute" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <!-- User Actions -->
+                <div class="user-actions hidden md:flex items-center space-x-4">
+                    <a href="/cart"
+                        class="cart-icon text-gray-700 hover:text-blue-600 transition"
+                        aria-label="Shopping Cart">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="/login"
+                        class="btn-login px-4 py-2 rounded-md text-sm font-medium">Login</a>
+                    <a href="/signup"
+                        class="btn-signup px-4 py-2 rounded-md text-sm font-medium">Sign
+                        Up</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="hamburger md:hidden text-gray-700"
+                    aria-label="Menu" aria-expanded="false">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu md:hidden">
+                <div class="px-4 py-2">
+                    <a href="/"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Home</a>
+                    <a href="/shop"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Shop</a>
+                    <a href="/about"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">About</a>
+                    <a href="/contact"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Contact</a>
+                    <div class="flex space-x-2 mt-2">
+                        <a href="/login"
+                            class="btn-login flex-1 text-center py-2 rounded-md text-sm font-medium">Login</a>
+                        <a href="/signup"
+                            class="btn-signup flex-1 text-center py-2 rounded-md text-sm font-medium">Sign
+                            Up</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="max-w-4xl mx-auto p-6">
+            <h2
+                class="text-3xl font-bold text-blue-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-shopping-cart text-blue-600"></i> Your Cart
+            </h2>
+
+            <div id="cart-items"
+                class="bg-white p-4 rounded-lg shadow space-y-4"></div>
+
+            <div id="summary" class="mt-8 bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Order
+                    Summary
+                </h3>
+                <p id="subtotal" class="text-gray-700 mb-2 text-lg">Subtotal: ₹0
+                </p>
+                <p class="text-gray-700 mb-2 text-lg">Shipping: ₹30</p>
+                <p id="total" class="text-xl font-bold text-gray-900">Total: ₹0
+                </p>
+
+                <p id="warning" class="text-red-600 mt-4 font-medium hidden">
+                    Minimum order amount is ₹300 to proceed to checkout.
+                </p>
+
+                <!-- Checkout Button -->
+                <button id="checkout-btn"
+                    class="mt-6 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 hover:bg-blue-700"
+                    disabled>
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+
+        <!-- footer -->
+        <footer class="bg-gray-800 text-white py-8 mt-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">NTPC E-commerce
+                        </h3>
+                        <p class="text-gray-400">Official procurement portal for
+                            NTPC employees and authorized customers.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/"
+                                    class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="/shop"
+                                    class="text-gray-400 hover:text-white transition">Shop</a></li>
+                            <li><a href="/about"
+                                    class="text-gray-400 hover:text-white transition">About</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Privacy
+                                    Policy</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Terms
+                                    of Service</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Procurement
+                                    Policy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Connect With Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                    <p>© 2025 NTPC Limited. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+        const email = "varad1289@gmail.com";
+        const cartContainer = document.getElementById("cart-items");
+        const subtotalEl = document.getElementById("subtotal");
+        const totalEl = document.getElementById("total");
+        const warningEl = document.getElementById("warning");
+        const checkoutBtn = document.getElementById("checkout-btn");
+
+        async function loadCartItems() {
+            try {
+                const res = await fetch(`http://localhost:3006/cart/items?email=${email}`);
+                const cartItems = await res.json();
+
+                if (!cartItems.length) {
+                    cartContainer.innerHTML = "<p class='text-gray-600'>Your cart is empty.</p>";
+                    subtotalEl.textContent = "Subtotal: ₹0";
+                    totalEl.textContent = "Total: ₹0";
+                    warningEl.classList.add("hidden");
+                    checkoutBtn.disabled = true;
+                    return;
+                }
+
+                let subtotal = 0;
+
+                cartContainer.innerHTML = cartItems.map(item => {
+                    const unitPrice = item.weight === 250 ? item.price250 : item.price500;
+                    const itemTotal = unitPrice * item.quantity;
+                    subtotal += itemTotal;
+
+                    return `
+            <div class="flex justify-between items-center border-b pb-4">
+              <div class="flex gap-4 items-start">
+                <img src="${item.image_link}" alt="${item.name}" class="w-20 h-20 object-cover rounded shadow" />
+                <div>
+                  <h4 class="font-semibold text-lg text-gray-800">${item.name}</h4>
+                  <p class="text-sm text-gray-600">Weight: ${item.weight}g</p>
+                  <p class="text-sm text-gray-600">Price: ₹${unitPrice}</p>
+                  <div class="flex mt-2">
+                    <input type="number" min="1" value="${item.quantity}"
+                      class="qty-input border px-2 py-1 w-16 mr-2 rounded"
+                      data-id="${item.id}" data-weight="${item.weight}">
+                    <button class="update-btn bg-green-500 text-white px-3 py-1 text-sm rounded mr-2 hover:bg-green-600 transition"
+                      data-id="${item.id}" data-weight="${item.weight}">Update</button>
+                    <button class="delete-btn bg-red-500 text-white px-3 py-1 text-sm rounded hover:bg-red-600 transition"
+                      data-id="${item.id}" data-weight="${item.weight}">Delete</button>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right font-bold text-lg text-gray-700">₹${itemTotal}</div>
+            </div>
+          `;
+                }).join("");
+
+                const shipping = 30;
+                const total = subtotal + shipping;
+
+                subtotalEl.textContent = `Subtotal: ₹${subtotal}`;
+                totalEl.textContent = `Total: ₹${total}`;
+                warningEl.classList.toggle("hidden", total >= 300);
+                checkoutBtn.disabled = total < 300;
+
+                attachListeners();
+            } catch (err) {
+                console.error("Error loading cart:", err);
+                cartContainer.innerHTML = "<p class='text-red-500'>Failed to load cart.</p>";
+            }
+        }
+
+        function attachListeners() {
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', async() => {
+                    const id = btn.dataset.id;
+                    const weight = btn.dataset.weight;
+
+                    const res = await fetch('http://localhost:3006/cart/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email_id: email,
+                            id: parseInt(id),
+                            weight: parseInt(weight)
+                        })
+                    });
+
+                    const data = await res.json();
+                    alert(data.message || "Item deleted.");
+                    loadCartItems();
+                });
+            });
+
+            document.querySelectorAll('.update-btn').forEach(btn => {
+                btn.addEventListener('click', async() => {
+                    const id = btn.dataset.id;
+                    const weight = btn.dataset.weight;
+                    const input = document.querySelector(`.qty-input[data-id="${id}"][data-weight="${weight}"]`);
+                    const quantity = parseInt(input.value);
+
+                    if (quantity < 1) {
+                        alert("Quantity must be at least 1");
+                        return;
+                    }
+
+                    const res = await fetch('http://localhost:3006/cart/update', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email_id: email,
+                            id: parseInt(id),
+                            weight: parseInt(weight),
+                            quantity
+                        })
+                    });
+
+                    const data = await res.json();
+                    alert(data.message || "Quantity updated.");
+                    loadCartItems();
+                });
+            });
+        }
+
+        document.getElementById("checkout-btn").addEventListener("click", () => {
+            alert("Proceeding to checkout...");
+            window.location.href = "/payment";
+
+            // Replace this with actual checkout logic or redirect
+        });
+
+        loadCartItems();
+    </script>
+    </body>
+
+</html>

@@ -1,0 +1,504 @@
+<!-- Updated Shop Page with Category-wise Cards and Description Blocks -->
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop - NTPC eCommerce</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+         :root {
+            --ntpc-blue: #0056b3;
+            --ntpc-light-blue: #007bff;
+            --ntpc-dark-blue: #003d7a;
+            --ntpc-grey: #6c757d;
+            --ntpc-light-grey: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-logo {
+            height: 40px;
+            transition: transform 0.3s;
+        }
+        
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            color: var(--ntpc-grey);
+            font-weight: 500;
+            position: relative;
+            padding: 20px 15px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--ntpc-blue);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 3px;
+            background-color: var(--ntpc-blue);
+        }
+        
+        .search-input {
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 8px 15px;
+            padding-right: 40px;
+            width: 200px;
+            transition: width 0.3s, box-shadow 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--ntpc-blue);
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+            width: 250px;
+        }
+        
+        .search-btn {
+            right: 10px;
+            color: var(--ntpc-grey);
+            transition: color 0.3s;
+        }
+        
+        .search-btn:hover {
+            color: var(--ntpc-blue);
+        }
+        
+        .btn-login {
+            border: 1px solid var(--ntpc-blue);
+            color: var(--ntpc-blue);
+            transition: all 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: var(--ntpc-light-grey);
+        }
+        
+        .btn-signup {
+            background-color: var(--ntpc-blue);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .btn-signup:hover {
+            background-color: var(--ntpc-dark-blue);
+        }
+        
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: var(--ntpc-blue);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background-color: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        @media (max-width: 992px) {
+            .nav-links,
+            .user-actions {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+            .search-container {
+                margin-left: auto;
+                margin-right: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-input {
+                width: 150px;
+            }
+            .search-input:focus {
+                width: 180px;
+            }
+        }
+        
+        .category-image {
+            size: 50wvh;
+        }
+    </style>
+  </head>
+
+  <body class="bg-gray-50 font-sans antialiased">
+    <nav class="navbar">
+      <div class="nav-container flex items-center justify-between h-16">
+        <!-- Logo and Navigation Links -->
+        <div class="flex items-center">
+          <a href="/" class="flex items-center" aria-label="NTPC Home">
+            <img src="/logo/ntpc.jpg" alt="NTPC Logo" class="nav-logo">
+          </a>
+
+          <div class="nav-links hidden md:flex ml-10">
+            <a href="/" class="nav-link" aria-current="page">Home</a>
+            <a href="/shop" class="nav-link active">Shop</a>
+            <a href="/about" class="nav-link">About</a>
+            <a href="/contact" class="nav-link">Contact</a>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container relative flex items-center">
+          <input type="text" placeholder="Search products..."
+            class="search-input" aria-label="Search products">
+          <button class="search-btn absolute" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+
+        <!-- User Actions -->
+        <div class="user-actions hidden md:flex items-center space-x-4">
+          <a href="/cart"
+            class="cart-icon text-gray-700 hover:text-blue-600 transition"
+            aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart text-xl"></i>
+            <span class="cart-count">3</span>
+          </a>
+          <a href="/login"
+            class="btn-login px-4 py-2 rounded-md text-sm font-medium">Login</a>
+          <a href="/signup"
+            class="btn-signup px-4 py-2 rounded-md text-sm font-medium">Sign
+            Up</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="hamburger md:hidden text-gray-700" aria-label="Menu"
+          aria-expanded="false">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="mobile-menu md:hidden">
+        <div class="px-4 py-2">
+          <a href="/"
+            class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Home</a>
+          <a href="/shop"
+            class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Shop</a>
+          <a href="/about"
+            class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">About</a>
+          <a href="/contact"
+            class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Contact</a>
+          <div class="flex space-x-2 mt-2">
+            <a href="/login"
+              class="btn-login flex-1 text-center py-2 rounded-md text-sm font-medium">Login</a>
+            <a href="/signup"
+              class="btn-signup flex-1 text-center py-2 rounded-md text-sm font-medium">Sign
+              Up</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <h1 class="text-3xl font-bold text-blue-800 mb-8 text-center">Shop Our
+        Premium Products</h1>
+
+      <!-- Amla Amrit Project Highlight Card -->
+      <div
+        class="mb-8 bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6">
+        <img src="images/ntpc2.png" alt="Amla"
+          class=" object-contain rounded-md category-image">
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Amla Amrit Project
+          </h2>
+          <p class="text-gray-600 mb-4">Amla is known for its antioxidant-rich
+            properties, immunity boosting potential, and is a core ingredient in
+            several NTPC wellness offerings. Explore our curated range of
+            amla-based health products including murabba, candy, powders and
+            more.
+          </p>
+          <a href="#cat-amla-amrit-project"
+            class="inline-block bg-green-600 text-white px-5 py-2 rounded-md hover:bg-green-700 transition">Explore
+            Varieties</a>
+        </div>
+      </div>
+
+      <!-- Ujjwala Project Highlight Card -->
+      <div
+        class="mb-8 bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6">
+        <img src="images/oil.png" alt="Ujjwala Mustard Oil"
+          class="w-29 object-contain rounded-md category-image">
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Ujjwala Mustard Oil
+          </h2>
+          <p class="text-gray-600 mb-4">Ujjwala Mustard Oil is a high-quality,
+            cold-pressed oil known for its purity and rich flavor. An essential
+            kitchen staple, it supports heart health and boosts immunity.
+            Discover our authentic Ujjwala offerings made for everyday wellness.
+          </p>
+          <a href="#cat-ujjwala"
+            class="inline-block bg-yellow-600 text-white px-5 py-2 rounded-md hover:bg-yellow-700 transition">Explore
+            Varieties</a>
+        </div>
+      </div>
+
+      <div
+        class="w-75 bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6">
+        <img src="images/kaushal_kaksh.jpg" alt="Amla"
+          class=" object-contain rounded-md category-image">
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Kaushal Kaksh
+          </h2>
+          <p class="text-gray-600 mb-4">
+            Kaushal Kaksh refers to a skill development or training room, often
+            decorated using Madhubani art to reflect the local culture and
+            heritage of Bihar. The Madhubani design elements used in Kaushal
+            Kaksh include motifs like peacocks, fish, flowers, and
+            geometric patterns, symbolizing growth, knowledge, and
+          </p>
+          <a href="#cat-amla-amrit-project"
+            class="inline-block bg-green-600 text-white px-5 py-2 rounded-md hover:bg-green-700 transition">Explore
+            Varieties</a>
+        </div>
+      </div>
+
+      <!-- Placeholder Cards for Future Categories -->
+      <div
+        class="mb-8 bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6">
+        <img src="/images/category-placeholder.png" alt="Category Placeholder"
+          class=" object-contain rounded-md category-image">
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Coming Soon</h2>
+          <p class="text-gray-600 mb-4">We are expanding our product catalog.
+            Stay tuned for more wellness-focused categories launching soon on
+            the NTPC eCommerce platform.</p>
+          <button disabled
+            class="inline-block bg-gray-400 text-white px-5 py-2 rounded-md opacity-70 cursor-not-allowed">More
+            Coming Soon</button>
+        </div>
+      </div>
+
+      <div id="product-category-wrapper" class="space-y-12"></div>
+    </div>
+
+    <!-- footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">NTPC E-commerce
+            </h3>
+            <p class="text-gray-400">Official procurement portal for NTPC
+              employees and authorized customers.</p>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+              <li><a href="/"
+                  class="text-gray-400 hover:text-white transition">Home</a></li>
+              <li><a href="/shop"
+                  class="text-gray-400 hover:text-white transition">Shop</a></li>
+              <li><a href="/about"
+                  class="text-gray-400 hover:text-white transition">About</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Legal</h4>
+            <ul class="space-y-2">
+              <li><a href="#"
+                  class="text-gray-400 hover:text-white transition">Privacy
+                  Policy</a></li>
+              <li><a href="#"
+                  class="text-gray-400 hover:text-white transition">Terms
+                  of Service</a></li>
+              <li><a href="#"
+                  class="text-gray-400 hover:text-white transition">Procurement
+                  Policy</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Connect With Us</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white transition"><i
+                  class="fab fa-facebook-f"></i></a>
+              <a href="#" class="text-gray-400 hover:text-white transition"><i
+                  class="fab fa-twitter"></i></a>
+              <a href="#" class="text-gray-400 hover:text-white transition"><i
+                  class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="text-gray-400 hover:text-white transition"><i
+                  class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+          <p>© 2025 NTPC Limited. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+        const wrapper = document.getElementById('product-category-wrapper');
+
+        async function loadProducts() {
+            try {
+                const res = await fetch('http://localhost:3006/products');
+                const products = await res.json();
+
+                const categoryMap = {};
+                products.forEach(prod => {
+                    if (!categoryMap[prod.category]) categoryMap[prod.category] = [];
+                    categoryMap[prod.category].push(prod);
+                });
+
+                wrapper.innerHTML = '';
+                Object.keys(categoryMap).forEach(category => {
+                    const categoryId = category.replace(/\s+/g, '-').toLowerCase();
+                    const section = document.createElement('section');
+                    section.className = 'category-section';
+                    section.innerHTML = `
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+                <div class="mb-4 sm:mb-0">
+                  <h2 class="text-2xl font-semibold text-gray-800">${category}</h2>
+                  <p class="text-gray-500 text-sm max-w-xl mt-1">Explore our premium selection of products under the ${category} category. Carefully curated with quality and wellness in mind.</p>
+                </div>
+                <a href="#cat-${categoryId}" class="mt-2 sm:mt-0 inline-block bg-blue-600 text-white px-5 py-2 rounded-md shadow hover:bg-blue-700 transition">Shop ${category}</a>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="cat-${categoryId}"></div>
+            </div>
+          `;
+                    wrapper.appendChild(section);
+
+                    const grid = section.querySelector('div.grid');
+                    categoryMap[category].forEach(product => {
+                        const card = document.createElement('div');
+                        card.className = 'product-card bg-gray-50 border rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-5 flex flex-col items-center text-center';
+                        card.innerHTML = `
+              <img src="${product.image_link}" alt="${product.name}" class="w-40 h-40 object-contain mb-3" />
+              <h3 class="text-lg font-semibold text-gray-800 mb-1">${product.name}</h3>
+              <select class="weight w-full border border-gray-300 rounded-md px-3 py-2 text-sm mb-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Select Weight</option>
+                <option value="250">250g - ₹${product.price250}</option>
+                <option value="500">500g - ₹${product.price500}</option>
+              </select>
+              <input type="number" min="1" value="1" class="qty w-full border border-gray-300 rounded-md px-3 py-2 text-sm mb-3 focus:ring-blue-500 focus:border-blue-500" />
+              <button class="add-to-cart w-full bg-blue-600 text-white py-2 px-4 rounded-md font-medium hover:bg-blue-700 transition-all duration-200" data-id="${product.id}">
+                <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+              </button>
+            `;
+                        grid.appendChild(card);
+                    });
+                });
+
+                attachAddToCartListeners();
+            } catch (err) {
+                console.error('Error loading products:', err);
+                wrapper.innerHTML = '<p class="text-red-500 text-center">Failed to load products.</p>';
+            }
+        }
+
+        function attachAddToCartListeners() {
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', async(e) => {
+                    const card = e.target.closest('.product-card');
+                    const id = e.target.dataset.id;
+                    const weight = card.querySelector('.weight').value;
+                    const quantity = parseInt(card.querySelector('.qty').value);
+
+                    if (!weight || quantity < 1) {
+                        alert('Please select weight and valid quantity.');
+                        return;
+                    }
+
+                    const payload = {
+                        email_id: "varad1289@gmail.com",
+                        id: parseInt(id),
+                        weight: parseInt(weight),
+                        quantity
+                    };
+
+                    try {
+                        const res = await fetch('http://localhost:3006/cart/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
+
+                        const data = await res.json();
+                        alert(data.message || 'Added to cart');
+                        updateCartCount();
+                    } catch (err) {
+                        console.error('Failed to add to cart:', err);
+                        alert('Failed to add to cart. Try again.');
+                    }
+                });
+            });
+        }
+
+        function updateCartCount() {
+            const cartCountElement = document.querySelector('.cart-count');
+            fetch('http://localhost:3006/cart/count?email=varad1289@gmail.com')
+                .then(res => res.json())
+                .then(data => {
+                    if (cartCountElement) cartCountElement.textContent = data.total || 0;
+                });
+        }
+
+        loadProducts();
+        updateCartCount();
+    </script>
+  </body>
+
+</html>

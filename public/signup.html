@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NTPC Auraiya E-commerce - Customer Registration</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+        .password-strength {
+            height: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .password-strength.weak {
+            background-color: #ef4444;
+            width: 25%;
+        }
+        
+        .password-strength.medium {
+            background-color: #f59e0b;
+            width: 50%;
+        }
+        
+        .password-strength.strong {
+            background-color: #10b981;
+            width: 75%;
+        }
+        
+        .password-strength.very-strong {
+            background-color: #3b82f6;
+            width: 100%;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1e40af;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .success-message {
+            animation: fadeInOut 4s ease-in-out forwards;
+        }
+        
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+        
+         :root {
+            --ntpc-blue: #0056b3;
+            --ntpc-light-blue: #007bff;
+            --ntpc-dark-blue: #003d7a;
+            --ntpc-grey: #6c757d;
+            --ntpc-light-grey: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-logo {
+            height: 40px;
+            transition: transform 0.3s;
+        }
+        
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            color: var(--ntpc-grey);
+            font-weight: 500;
+            position: relative;
+            padding: 20px 15px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--ntpc-blue);
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 3px;
+            background-color: var(--ntpc-blue);
+        }
+        
+        .search-input {
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 8px 15px;
+            padding-right: 40px;
+            width: 200px;
+            transition: width 0.3s, box-shadow 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--ntpc-blue);
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+            width: 250px;
+        }
+        
+        .search-btn {
+            right: 10px;
+            color: var(--ntpc-grey);
+            transition: color 0.3s;
+        }
+        
+        .search-btn:hover {
+            color: var(--ntpc-blue);
+        }
+        
+        .btn-login {
+            border: 1px solid var(--ntpc-blue);
+            color: var(--ntpc-blue);
+            transition: all 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: var(--ntpc-light-grey);
+        }
+        
+        .btn-signup {
+            background-color: var(--ntpc-blue);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .btn-signup:hover {
+            background-color: var(--ntpc-dark-blue);
+        }
+        
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: var(--ntpc-blue);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background-color: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        @media (max-width: 992px) {
+            .nav-links,
+            .user-actions {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+            .search-container {
+                margin-left: auto;
+                margin-right: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-input {
+                width: 150px;
+            }
+            .search-input:focus {
+                width: 180px;
+            }
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        
+        .eye-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            color: #666;
+        }
+        
+        .criteria-list {
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .criteria-list p {
+            margin: 2px 0;
+        }
+        
+        .valid {
+            color: green;
+        }
+        
+        .invalid {
+            color: red;
+        }
+    </style>
+    </head>
+
+    <body class="bg-gray-100 min-h-screen flex flex-col">
+        <!-- Header -->
+        <nav class="navbar">
+            <div class="nav-container flex items-center justify-between h-16">
+                <!-- Logo and Navigation Links -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center"
+                        aria-label="NTPC Home">
+                        <img src="/logo/ntpc.jpg" alt="NTPC Logo"
+                            class="nav-logo">
+                    </a>
+
+                    <div class="nav-links hidden md:flex ml-10">
+                        <a href="/" class="nav-link"
+                            aria-current="page">Home</a>
+                        <a href="/shop" class="nav-link">Shop</a>
+                        <a href="/about" class="nav-link">About</a>
+                        <a href="/contact" class="nav-link">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container relative flex items-center">
+                    <input type="text" placeholder="Search products..."
+                        class="search-input" aria-label="Search products">
+                    <button class="search-btn absolute" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <!-- User Actions -->
+                <div class="user-actions hidden md:flex items-center space-x-4">
+                    <a href="/cart"
+                        class="cart-icon text-gray-700 hover:text-blue-600 transition"
+                        aria-label="Shopping Cart">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="/login"
+                        class="btn-login px-4 py-2 rounded-md text-sm font-medium">Login</a>
+                    <a href="/signup"
+                        class="btn-signup px-4 py-2 rounded-md text-sm font-medium">Sign
+                        Up</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="hamburger md:hidden text-gray-700"
+                    aria-label="Menu" aria-expanded="false">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu md:hidden">
+                <div class="px-4 py-2">
+                    <a href="/"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Home</a>
+                    <a href="/shop"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Shop</a>
+                    <a href="/about"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">About</a>
+                    <a href="/contact"
+                        class="block py-2 px-2 text-gray-700 hover:bg-gray-100 rounded">Contact</a>
+                    <div class="flex space-x-2 mt-2">
+                        <a href="/login"
+                            class="btn-login flex-1 text-center py-2 rounded-md text-sm font-medium">Login</a>
+                        <a href="/signup"
+                            class="btn-signup flex-1 text-center py-2 rounded-md text-sm font-medium">Sign
+                            Up</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div
+                class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Form Header -->
+                <div class="bg-blue-800 text-white py-4 px-6">
+                    <h2 class="text-xl font-bold">Customer Registration</h2>
+                    <p class="text-blue-200 text-sm">Create your account to
+                        access NTPC Auraiya E-commerce</p>
+                </div>
+
+                <!-- Success Message (Hidden by default) -->
+                <div id="successMessage"
+                    class="success-message hidden bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+                    <p>Account created successfully! Please check your email to
+                        verify.
+                    </p>
+                </div>
+
+                <!-- Registration Form -->
+
+                <form action="/signup" method="POST" id="registrationForm"
+                    style="max-width: 500px; margin: auto; padding: 20px;">
+                    <h2 style="text-align:center;">Signup Form</h2>
+
+                    <!-- Full Name -->
+                    <div>
+                        <label for="fullName">Full Name <span
+                                style="color: red;">*</span>
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">Enter your full name
+                                    as per NTPC records</span>
+                            </span>
+                        </label>
+                        <input type="text" id="fullName" name="fullName"
+                            required
+                            style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+                    </div><br />
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email">Email <span
+                                style="color: red;">*</span></label>
+                        <input type="email" id="email" name="email" required
+                            style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+                    </div><br />
+
+                    <!-- Mobile -->
+                    <div>
+                        <label for="mobile">Mobile Number <span
+                                style="color: red;">*</span></label>
+                        <div style="display: flex;">
+                            <span
+                                style="padding: 8px; background-color: #eee; border: 1px solid #ccc; border-right: none;">+91</span>
+                            <input type="tel" id="mobile" name="mobile"
+                                pattern="[0-9]{10}" required
+                                style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 0 4px 4px 0;" />
+                        </div>
+                    </div><br />
+
+                    <!-- Password -->
+                    <div>
+                        <label for="password">Password <span
+                                style="color: red;">*</span>
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">At least 8
+                                    characters, 1 uppercase, 1 number, 1 special
+                                    character</span>
+                            </span>
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password"
+                                required
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+                            <button type="button" class="eye-button"
+                                onclick="togglePassword('password', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="criteria-list">
+                            <p id="lengthReq" class="invalid"><i
+                                    class="fas fa-times-circle"></i> At least 8
+                                characters
+                            </p>
+                            <p id="upperReq" class="invalid"><i
+                                    class="fas fa-times-circle"></i> At least 1
+                                uppercase letter</p>
+                            <p id="numberReq" class="invalid"><i
+                                    class="fas fa-times-circle"></i> At least 1
+                                number
+                            </p>
+                            <p id="specialReq" class="invalid"><i
+                                    class="fas fa-times-circle"></i> At least 1
+                                special character</p>
+                        </div>
+                    </div><br />
+
+                    <!-- Confirm Password -->
+                    <div>
+                        <label for="confirmPassword">Confirm Password <span
+                                style="color: red;">*</span></label>
+                        <div class="relative">
+                            <input type="password" id="confirmPassword" required
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+                            <button type="button" class="eye-button"
+                                onclick="togglePassword('confirmPassword', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <p id="passwordMatch"
+                            class="text-xs text-red-500 hidden"
+                            style="color: red; font-size: 12px;">Passwords do
+                            not match</p>
+                    </div><br />
+
+                    <!-- Terms -->
+                    <div style="display: flex; align-items: center;">
+                        <input type="checkbox" id="terms" name="terms"
+                            required />
+                        <label for="terms" style="margin-left: 8px;">
+                            I agree to the <a href="#"
+                                style="color: blue;">Terms & Privacy Policy</a>
+                        </label>
+                    </div><br />
+
+                    <!-- Submit -->
+                    <button type="submit"
+                        style="width: 100%; background-color: #2563EB; color: white; padding: 10px; border: none; border-radius: 4px; font-weight: bold;">
+                        Sign Up
+                    </button>
+
+                    <p style="text-align: center; margin-top: 10px;">Already
+                        have an account?
+                        <a href="/login" style="color: #2563EB;">Login
+                            here</a>
+                    </p>
+                </form>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-8 mt-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">NTPC E-commerce</h3>
+                        <p class="text-gray-400">Official procurement portal for
+                            NTPC employees and authorized customers.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/"
+                                    class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="/shop"
+                                    class="text-gray-400 hover:text-white transition">Shop</a></li>
+                            <li><a href="/about"
+                                    class="text-gray-400 hover:text-white transition">About</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Privacy
+                                    Policy</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Terms
+                                    of Service</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition">Procurement
+                                    Policy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Connect With Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a href="#"
+                                class="text-gray-400 hover:text-white transition"><i
+                                    class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                    <p>© 2025 NTPC Limited. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+        // Password toggle
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            const icon = btn.querySelector("i");
+            input.type = input.type === "password" ? "text" : "password";
+            icon.classList.toggle("fa-eye");
+            icon.classList.toggle("fa-eye-slash");
+        }
+
+        // Confirm password match
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+        const passwordMatch = document.getElementById("passwordMatch");
+
+        confirmPassword.addEventListener("input", () => {
+            passwordMatch.classList.toggle("hidden", password.value === confirmPassword.value);
+        });
+
+        // Prevent submit if password mismatch
+        const form = document.getElementById("registrationForm");
+        form.addEventListener("submit", function(e) {
+            if (password.value !== confirmPassword.value) {
+                e.preventDefault();
+                passwordMatch.classList.remove("hidden");
+            }
+        });
+
+        // Password strength criteria
+        const lengthReq = document.getElementById("lengthReq");
+        const upperReq = document.getElementById("upperReq");
+        const numberReq = document.getElementById("numberReq");
+        const specialReq = document.getElementById("specialReq");
+
+        password.addEventListener("input", () => {
+            const val = password.value;
+            toggleClass(lengthReq, val.length >= 8);
+            toggleClass(upperReq, /[A-Z]/.test(val));
+            toggleClass(numberReq, /[0-9]/.test(val));
+            toggleClass(specialReq, /[^A-Za-z0-9]/.test(val));
+        });
+
+        function toggleClass(element, condition) {
+            if (condition) {
+                element.classList.remove("invalid");
+                element.classList.add("valid");
+                element.querySelector("i").className = "fas fa-check-circle";
+            } else {
+                element.classList.remove("valid");
+                element.classList.add("invalid");
+                element.querySelector("i").className = "fas fa-times-circle";
+            }
+        }
+    </script>
+
+    </body>
+
+</html>
